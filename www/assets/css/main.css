@@ -22,3 +22,21 @@
   text-align: center;
   padding: 10px;
 }
+
+#workout{
+  position: absolute;
+  left: calc(50% - 64px);
+  /*top: 200px;*/
+}
+
+#abs{
+  position: absolute;
+  left: calc(50% - 64px);
+  top: 178px;
+}
+
+#vegetable{
+  position: absolute;
+  left: calc(50% - 64px);
+  top: 336px;
+}

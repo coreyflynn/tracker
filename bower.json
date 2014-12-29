@@ -1,0 +1,20 @@
+{
+  "name": "tracker",
+  "version": "0.1.0",
+  "homepage": "https://github.com/coreyflynn/tracker",
+  "authors": [
+    "Corey Flynn <flynn.corey@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "hammerjs": "~2.0.4",
+    "hammer-touchemulator": "~0.0.2"
+  }
+}

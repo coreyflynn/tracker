@@ -175,3 +175,97 @@ $('#signInForm').submit(function (event) {
       });
     });
 });
+
+/***********************
+ * Handle swipe events *
+ ***********************/
+var directionLock = false,
+    panned = false,
+    pct,
+    direction;
+
+
+$('body').css('height',window.innerHeight);
+var hammerElement = document.getElementsByTagName('body')[0];
+var hammertime = new Hammer(hammerElement, {threshold: 100});
+hammertime.on('pan', function(ev) {
+    panned = true;
+    if (!directionLock){
+      direction = ev.direction;
+      directionLock = true;
+    }
+
+    if (direction === 4){
+      pct = ev.distance / window.innerWidth * 100;
+      if (ev.deltaX > 0){
+        var workoutLeft = 'calc(50% + ' + pct/2 + '% - 64px)';
+        $('#workout').css('left',workoutLeft);
+        $('#workout').css('opacity',1 - pct*3 / 100);
+
+        var absLeft = 'calc(50% + ' + pct/3 + '% - 64px)';
+        $('#abs').css('left',absLeft);
+        $('#abs').css('opacity',1 - pct*2 / 100);
+
+        var vegetableLeft = 'calc(50% + ' + pct/4 + '% - 64px)';
+        $('#vegetable').css('left',vegetableLeft);
+        $('#vegetable').css('opacity',1 - pct / 100);
+      }
+    }
+
+    if (direction === 2){
+      pct = ev.distance / window.innerWidth * 100;
+      if (ev.deltaX < 0){
+        var workoutLeft = 'calc(50% - ' + pct/2 + '% - 64px)';
+        $('#workout').css('left',workoutLeft);
+        $('#workout').css('opacity',1 - pct*3 / 100);
+
+        var absLeft = 'calc(50% - ' + pct/3 + '% - 64px)';
+        $('#abs').css('left',absLeft);
+        $('#abs').css('opacity',1 - pct*2 / 100);
+
+        var vegetableLeft = 'calc(50% - ' + pct/4 + '% - 64px)';
+        $('#vegetable').css('left',vegetableLeft);
+        $('#vegetable').css('opacity',1 - pct / 100);
+      }
+    }
+});
+
+$('body').bind('touchend',function(){
+  if (panned){
+    panned = false;
+    directionLock = false;
+    var left = (window.innerWidth / 2 - 90 )/ window.innerWidth * 100 + '%';
+
+    if (direction === 2 && pct >= 50 && inPast){
+
+      $('#workout').animate({'left': left, opacity: 0},1);
+      $('#abs').animate({'left': left, opacity: 0},1);
+      $('#vegetable').animate({'left': left, opacity: 0},1);
+      setTimeout(function(){
+        $('#workout').animate({opacity: 1},300);
+        $('#abs').animate({opacity: 1},300);
+        $('#vegetable').animate({opacity: 1},300);
+      },300);
+
+      currentDate.setDate(currentDate.getDate() + 1);
+      updateDate(currentDate);
+
+    }else if (direction === 4 && pct >= 50){
+      $('#workout').animate({'left': left, opacity: 0},1);
+      $('#abs').animate({'left': left, opacity: 0},1);
+      $('#vegetable').animate({'left': left, opacity: 0},1);
+      setTimeout(function(){
+        $('#workout').animate({opacity: 1},300);
+        $('#abs').animate({opacity: 1},300);
+        $('#vegetable').animate({opacity: 1},300);
+      },300);
+
+      currentDate.setDate(currentDate.getDate() - 1);
+      updateDate(currentDate);
+    }else if (pct >= 10){
+      $('#workout').animate({'left': left, opacity: 1},300);
+      $('#abs').animate({'left': left, opacity: 1},300);
+      $('#vegetable').animate({'left': left, opacity: 1},300);
+    }
+  }
+});
