@@ -159,6 +159,7 @@ $('#signInForm').submit(function (event) {
       console.log('login succeeded');
       $('#signInForm').hide();
       $('#mainContainer').show();
+      $('#mainContainer').animate({opacity:1},600);
     })
     .fail(function(){
       console.log('failed login, attempting to create account');
@@ -166,6 +167,7 @@ $('#signInForm').submit(function (event) {
       .done(function(){
         $('#signInForm').hide();
         $('#mainContainer').show();
+        $('#mainContainer').animate({opacity:1},600);
         console.log('created account');
       })
       .fail(function(){
