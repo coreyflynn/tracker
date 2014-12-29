@@ -8,7 +8,7 @@ var currentDate = new Date(),
 var hoodie  = new Hoodie();
 
 // start appcache
-// hoodie.appCache.start();
+hoodie.appCache.start();
 
 // bind main buttons
 var buttonIds = [
